@@ -1,41 +1,31 @@
-import { Card, Form, Button, Alert } from 'react-bootstrap';
+import { Card, Form, Button } from 'react-bootstrap';
 import './form-clima.css';
 import CardClima from '../CardClima/CardClima';
 
-// import { useState, useEffect } from 'react';
-// import { useForm } from 'react-hook-form';
+import { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 
 const FormClima = () => {
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  // const onSubmit = async (datos = '') => {
-  //TODO: realizar la consulta a la API del clima al presionar Enviar
-  // try {
-  //   setMostrarSpinner(true);
-  //   if (datos === '') {
-  //     const resp = await fetch(
-  //       `https://newsdata.io/api/1/news?apikey=pub_23780f986c99c831d5da97ac5387f0936f5f1`
-  //     );
-  //     const data = await resp.json();
-  //     setNoticias(data.results);
-  //   } else {
-  //     const resp = await fetch(
-  //       `https://newsdata.io/api/1/news?apikey=pub_23780f986c99c831d5da97ac5387f0936f5f1&q=${datos.categoria}&country=${datos.pais}`
-  //     );
-  //     const data = await resp.json();
-  //     setNoticias(data.results);
-  //     setCateg(datos.categoria);
-  //     setPai(datos.pais);
-  //   }
-  //   setMostrarSpinner(false);
-  // } catch (error) {
-  //   console.log(error);
-  // }
-  //};
+  const onSubmit = async () => {
+    //3d73e1aee8b83e8ad4912b2fa95cb838
+    const ciudad = 'Las Vegas';
+    const pais = 'AR';
+    try {
+      const resp = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${ciudad},${pais}&appid=3d73e1aee8b83e8ad4912b2fa95cb838`
+      );
+      const data = await resp.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -45,7 +35,7 @@ const FormClima = () => {
             Consultar Clima
           </Card.Title>
           <CardClima />
-          <Form>
+          <Form onClick={handleSubmit(onSubmit)}>
             {/* <Form.Group
               className="justify-content-center align-items-center mb-3"
               controlId="formCategory"
