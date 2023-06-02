@@ -3,19 +3,25 @@ import './card-clima.css';
 
 const CardClima = ({ climaElegido }) => {
   const {
-    main: { temp },
+    name,
+    main: { temp, temp_max, temp_min },
   } = climaElegido;
+
+  const kevinACentigrados = (grados) => parseInt(grados - 273.15);
   return (
     <>
       <Card className="mt-2 text-center border-0">
         <Card.Body>
           <Card.Title className="text-muted display-6 mb-3">
-            Clima en .....
+            Clima en {name}
           </Card.Title>
           <Card.Subtitle className="mb-2 fw-bold display-4">
-            20 °C
+            {kevinACentigrados(temp)} °C
           </Card.Subtitle>
-          <Card.Text>Max: 21 °C - Mín: 20 °C</Card.Text>
+          <Card.Text>
+            Max: {kevinACentigrados(temp_max)} °C - Mín:{' '}
+            {kevinACentigrados(temp_min)} °C
+          </Card.Text>
         </Card.Body>
       </Card>
     </>

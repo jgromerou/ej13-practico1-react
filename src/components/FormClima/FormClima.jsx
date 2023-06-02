@@ -17,19 +17,20 @@ const FormClima = () => {
 
   const onSubmit = async (datos) => {
     //3d73e1aee8b83e8ad4912b2fa95cb838
-
     const { ubicacion, pais } = datos;
-
     try {
+      setIsValidClima(true);
       const resp = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${ubicacion},${pais}&appid=3d73e1aee8b83e8ad4912b2fa95cb838`
       );
       const data = await resp.json();
       if (data.cod === '404') {
         console.log('Error por poner mal el nombre de ciudad');
+        setIsValidClima(true);
         return;
       }
       setClimaElegido(data);
+      setIsValidClima(false);
     } catch (error) {
       console.log(error);
     }
@@ -64,6 +65,7 @@ const FormClima = () => {
               className="justify-content-center align-items-center mb-3"
               controlId="nombrePais"
             >
+              <Form.Label className="fw-bold">País:</Form.Label>
               <Form.Select
                 aria-label="Seleccione un país:"
                 {...register('pais', {
