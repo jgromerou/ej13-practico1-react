@@ -1,15 +1,18 @@
-# Ejercicio 12 del TP1: Web de Noticias - React ![React Icon](./src/assets/react.svg)
+# Ejercicio 13 del TP1: App del Clima - React ![React Icon](./src/assets/react.svg)
 
 ## Descripción
 
 ### Componentes:
 
-Modifica la web anterior permitiendo que el usuario seleccione el país y la
-categoría de las noticias que quiere ver.
+Crea una aplicación web, que permita escribir una ubicación y un país, luego
+presione un botón consultar y muestre el clima del lugar ingresado, consultar el
+clima utilizando la API https://openweathermap.org/. Si la ubicación ingresada no
+existe, mostrar un cartel de error indicando que no se encontraron datos de la
+ciudad ingresada.
 
 ## Link Versión en Producción
 
-https://ej12-tp1-react-rollingcode-romerouro.netlify.app/
+https://ej13-tp1-react-rollingcode-romerouro.netlify.app/
 
 ## Tecnologias / Herramientas 🛠
 
@@ -29,7 +32,7 @@ Sigue estos pasos para clonar y ejecutar la aplicación en tu entorno local:
 1.  **Clona el repositorio:** En tu línea de comandos, ejecuta el siguiente comando para clonar el repositorio:
 
     ```
-    git clone https://github.com/jgromerou/ej12-practico1-react.git
+    git clone https://github.com/jgromerou/ej13-practico1-react.git
     ```
 
 2.  **Accede al directorio:** Ve al directorio de la aplicación clonada:
