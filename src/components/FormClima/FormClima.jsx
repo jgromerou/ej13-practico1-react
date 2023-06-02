@@ -14,6 +14,7 @@ const FormClima = () => {
 
   const [climaElegido, setClimaElegido] = useState();
   const [isValidClima, setIsValidClima] = useState(true);
+  const [alerta, setAlerta] = useState('');
 
   const onSubmit = async (datos) => {
     //3d73e1aee8b83e8ad4912b2fa95cb838
@@ -25,7 +26,7 @@ const FormClima = () => {
       );
       const data = await resp.json();
       if (data.cod === '404') {
-        console.log('Error por poner mal el nombre de ciudad');
+        mostrarAlerta('Nombre de ciudad no existe');
         setIsValidClima(true);
         return;
       }
@@ -36,6 +37,14 @@ const FormClima = () => {
     }
   };
 
+  const mostrarAlerta = (alerta) => {
+    setAlerta(alerta);
+
+    setTimeout(() => {
+      setAlerta('');
+    }, 3000);
+  };
+
   return (
     <>
       <Card className="container-wrapper">
@@ -43,6 +52,7 @@ const FormClima = () => {
           <Card.Title className="mt-2 mb-4 text-uppercase  fw-bold text-center">
             Consultar Clima
           </Card.Title>
+          {alerta && <Alert variant="danger">{alerta}</Alert>}
           {!isValidClima && <CardClima climaElegido={climaElegido} />}
           <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Group className="mb-4" controlId="ubicacionCiudad">
