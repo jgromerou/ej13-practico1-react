@@ -12,20 +12,27 @@ const FormClima = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async () => {
+  const [climaElegido, setClimaElegido] = useState();
+  const [isValidClima, setIsValidClima] = useState(true);
+
+  const onSubmit = async (datos) => {
     //3d73e1aee8b83e8ad4912b2fa95cb838
-    const ciudad = 'Las Vegas';
-    const pais = 'AR';
-    console.log('Buscando un clima...');
-    // try {
-    //   const resp = await fetch(
-    //     `https://api.openweathermap.org/data/2.5/weather?q=${ciudad},${pais}&appid=3d73e1aee8b83e8ad4912b2fa95cb838`
-    //   );
-    //   const data = await resp.json();
-    //   console.log(data);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+
+    const { ubicacion, pais } = datos;
+
+    try {
+      const resp = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${ubicacion},${pais}&appid=3d73e1aee8b83e8ad4912b2fa95cb838`
+      );
+      const data = await resp.json();
+      if (data.cod === '404') {
+        console.log('Error por poner mal el nombre de ciudad');
+        return;
+      }
+      setClimaElegido(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -35,8 +42,8 @@ const FormClima = () => {
           <Card.Title className="mt-2 mb-4 text-uppercase  fw-bold text-center">
             Consultar Clima
           </Card.Title>
-          <CardClima />
-          <Form onClick={handleSubmit(onSubmit)}>
+          {!isValidClima && <CardClima climaElegido={climaElegido} />}
+          <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Group className="mb-4" controlId="ubicacionCiudad">
               <Form.Label className="fw-bold">Ubicación Ciudad:</Form.Label>
               <Form.Control
@@ -48,7 +55,7 @@ const FormClima = () => {
                 placeholder="Ingrese nombre de Ciudad"
               />
               {errors.ubicacion && (
-                <Alert variant="danger" className="py-2 my-1">
+                <Alert variant="danger" className="py-2 my-2">
                   Por favor ingrese una Ciudad...
                 </Alert>
               )}
@@ -74,7 +81,7 @@ const FormClima = () => {
                 <option value="PE">Perú</option>
               </Form.Select>
               {errors.pais && (
-                <Alert variant="danger" className="py-2 my-1">
+                <Alert variant="danger" className="py-2 my-2">
                   Por favor seleccione un país...
                 </Alert>
               )}
