@@ -2,7 +2,7 @@ import { Card, Form, Button, Alert } from 'react-bootstrap';
 import './form-clima.css';
 import CardClima from '../CardClima/CardClima';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 const FormClima = () => {
@@ -15,11 +15,12 @@ const FormClima = () => {
   const [climaElegido, setClimaElegido] = useState();
   const [isValidClima, setIsValidClima] = useState(true);
   const [alerta, setAlerta] = useState('');
+  const [mostrarSpinner, setMostrarSpinner] = useState(false);
 
   const onSubmit = async (datos) => {
-    //3d73e1aee8b83e8ad4912b2fa95cb838
     const { ubicacion, pais } = datos;
     try {
+      setMostrarSpinner(true);
       setIsValidClima(true);
       const resp = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${ubicacion},${pais}&appid=3d73e1aee8b83e8ad4912b2fa95cb838`
@@ -32,6 +33,7 @@ const FormClima = () => {
       }
       setClimaElegido(data);
       setIsValidClima(false);
+      setMostrarSpinner(false);
     } catch (error) {
       console.log(error);
     }
@@ -45,6 +47,25 @@ const FormClima = () => {
     }, 3000);
   };
 
+  const mostrarComponente = !isValidClima ? (
+    <CardClima climaElegido={climaElegido} />
+  ) : !mostrarSpinner ? null : (
+    <div className="sk-circle">
+      <div className="sk-circle1 sk-child"></div>
+      <div className="sk-circle2 sk-child"></div>
+      <div className="sk-circle3 sk-child"></div>
+      <div className="sk-circle4 sk-child"></div>
+      <div className="sk-circle5 sk-child"></div>
+      <div className="sk-circle6 sk-child"></div>
+      <div className="sk-circle7 sk-child"></div>
+      <div className="sk-circle8 sk-child"></div>
+      <div className="sk-circle9 sk-child"></div>
+      <div className="sk-circle10 sk-child"></div>
+      <div className="sk-circle11 sk-child"></div>
+      <div className="sk-circle12 sk-child"></div>
+    </div>
+  );
+
   return (
     <>
       <Card className="container-wrapper">
@@ -53,7 +74,7 @@ const FormClima = () => {
             Consultar Clima
           </Card.Title>
           {alerta && <Alert variant="danger">{alerta}</Alert>}
-          {!isValidClima && <CardClima climaElegido={climaElegido} />}
+          {mostrarComponente}
           <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Group className="mb-4" controlId="ubicacionCiudad">
               <Form.Label className="fw-bold">Ubicación Ciudad:</Form.Label>
