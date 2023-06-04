@@ -29,6 +29,7 @@ const FormClima = () => {
       if (data.cod === '404') {
         mostrarAlerta('Nombre de ciudad no existe');
         setIsValidClima(true);
+        setMostrarSpinner(false);
         return;
       }
       setClimaElegido(data);
